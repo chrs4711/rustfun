@@ -1,4 +1,5 @@
 use std::io;
+use std::cmp::Ordering;
 use rand::Rng;
 
 fn main() {
@@ -16,7 +17,15 @@ fn main() {
         // if it's an "Ok", the expect function returns the no of bytes read.
         // if it's an "Err", the expect function will crash the program.
 
-    println!("Bytes read: {}", bytes_read);
+    let guess: u32 = guess.trim().parse().expect("Please type a number!");
 
+    println!("Bytes read: {}", bytes_read);
     println!("You guessed: {}", guess);
+
+    match guess.cmp(&secret_number) {
+        // the lines here are "arms"
+        Ordering::Less => println!("Too small!"),
+        Ordering::Greater => println!("Too big!"),
+        Ordering::Equal => println!("Epic Win!"),
+    }
 }
