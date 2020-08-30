@@ -5,6 +5,8 @@ fn main() {
     
     string_fun();
 
+    more_string_fun();
+
     super_normal_number_stuff();
 }
 
@@ -32,6 +34,20 @@ fn string_fun() {
     // s1 is invalid, so we only have to free up the memory that s2 points to.
     // if we go out of scope, the special function 'drop' is called.
 }
+
+fn more_string_fun() {
+
+    let s1 = String::from("foobar");
+
+    print_string_length(&s1);
+
+    println!("My String: {}", s1);
+}
+
+fn print_string_length(s: &String) {
+    println!("Lengh of '{}': {} bytes", s, s.len());
+}
+
 
 /// now we have _two_ variables of whatever the type of '5' is on the stack.
 fn super_normal_number_stuff() {
