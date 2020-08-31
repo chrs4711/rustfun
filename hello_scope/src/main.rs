@@ -59,3 +59,15 @@ fn more_string_fun() {
 fn print_string_length(s: &String) {
     println!("Lengh of '{}': {} bytes", s, s.len());
 }
+
+/// a function that creates a string for us
+fn gimme_string() -> String {
+    let some_string = String::from("hello");
+
+    some_string // gets moved to the calling function
+}
+
+/// the function taketh, the function giveth
+fn process_string(a_string: String) -> String {
+    a_string
+}
