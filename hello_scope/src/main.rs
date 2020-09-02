@@ -11,19 +11,20 @@ fn main() {
 
 /// nothing special here
 fn nothing_special(x: i32)  {
-    println!("value: {}", x);
+    println!("value: {}\n", x);
 }
 
 /// now we have _two_ variables of whatever the type of '5' is on the stack.
 fn super_normal_number_stuff() {
+    
+    println!("no references, just values:");
     let mut x = 5;
     let y = x;
-
+    
     println!("x: {}, y: {}", x, y);
 
-    // no references, just values.
     x = 2;
-    println!("x: {}, y: {}", x, y);
+    println!("x: {}, y: {}\n", x, y);
 }
 
 
@@ -41,7 +42,7 @@ fn string_fun() {
     // println!("Some string: {}", s1); ERROR!!
 
     s2.push_str("sdfads");
-    println!("Some string: {}", s2);
+    println!("Some string: {}\n", s2);
         
     // s1 is invalid, so we only have to free up the memory that s2 points to.
     // if we go out of scope, the special function 'drop' is called.
@@ -53,7 +54,23 @@ fn more_string_fun() {
 
     print_string_length(&s1);
 
-    println!("My String: {}", s1);
+    println!("My String: {}\n", s1);
+
+    let s1 = gimme_string();
+    print_string_length(&s1);
+
+    let s1 = process_string(s1);
+    println!("s2: {}", s1);
+
+    take_ownership(s1);
+
+    // won't work!1
+    // println!("s1: {}", s1);
+}
+
+/// The underscore tells the compiler not to worry about the unused variable
+fn take_ownership(_s: String) {
+    // we do nothing here :-D
 }
 
 fn print_string_length(s: &String) {
