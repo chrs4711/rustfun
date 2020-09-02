@@ -13,6 +13,8 @@ fn main() {
     modify_string(&mut s2);
     println!("String: '{}'", s2);
 
+    let s = String::from("foo bar");
+    first_word_index(&s);
 }
 
 fn calculate_length(s: &String) -> usize {
@@ -38,9 +40,50 @@ fn _wont_work() {
     println!("{}", r3);
 }
 
+fn _better() {
+    let mut s = String::from("hello");
+
+    let r1 = &s;
+    let r2 = &s;
+    println!("{} {}", r1, r2);
+
+    // nobody uses a pointer to s beyond this part, so nobody will
+    // be surprised by changing data. I.e. now a mutable ref is ok. 
+
+    let r3 = &mut s;
+    println!("{}", r3);
+}
+
 /// the same without references. It steals ownership
 /// of the passed string.
 fn _calculate_length_awkward(s: String) -> usize {
     s.len()
 }
 
+fn first_word_index(s: &String) -> usize {
+
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        print!("--> checking [{}]", item);
+        if item == b' ' {
+            println!(" HIT");
+            return i;
+        }
+        println!();
+    }
+
+    s.len()
+}
+
+fn first_word_sl(s: &String) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[..]
+}
