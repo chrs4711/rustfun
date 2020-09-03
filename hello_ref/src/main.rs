@@ -1,3 +1,7 @@
+use std::io::prelude::*;
+use std::io;
+use std::{thread, time};
+
 fn main() {
     println!("Fun with references!");
 
@@ -7,6 +11,16 @@ fn main() {
 
     println!("The length of '{}' is {}", s1, len);
     
+    string_fun();
+
+    loop_fun();
+    while_fun();
+    for_fun();
+}
+
+fn string_fun() {
+    println!("\n### string_fun!");
+
     // If we want to change stuff around in functions, more ceremony is needed:
     let mut s2 = String::from("changeme");
     println!("String: '{}'", s2);
@@ -17,7 +31,7 @@ fn main() {
     first_word_index(&s);
 
     let s2 = String::from("hello world");
-    let str = first_word_sl(&s2[..]);
+    let str = first_word_sl(&s2);
     println!("first word of '{}' is '{}'", &s2, str);
 
     println!("first word of '{}' is '{}'", "foo bar", first_word_sl("foo bar"));
@@ -85,6 +99,7 @@ fn first_word_index(s: &String) -> usize {
     s.len()
 }
 
+/// Apparently we can also plug a reference to a String into that ¯\_(ツ)_/¯
 fn first_word_sl(s: &str) -> &str {
     let bytes = s.as_bytes();
 
@@ -95,4 +110,58 @@ fn first_word_sl(s: &str) -> &str {
     }
 
     &s[..]
+}
+
+fn loop_fun() {
+    
+    println!("\n### loop_fun!");
+
+    let mut counter = 0;
+
+    let result = loop {
+        counter += 1;
+
+        if counter == 10 {
+            break counter * 2; // hehe that's the return value
+        }
+    };
+
+    println!("The result is {}", result);
+}
+
+fn while_fun() {
+
+    println!("\n### while_fun!");
+
+    let a = [10, 20, 30, 40, 50];
+    let mut index = 0;
+
+    while index < 5 {
+        print!("[{}]", a[index]);
+
+        index += 1;
+    }
+
+    println!();
+}
+
+fn for_fun() {
+
+    println!("\n### for_fun!");
+
+    let a = [10, 20, 30, 40, 50];
+
+    for element in a.iter() {
+        print!("[{}]", element);
+    }
+
+    println!();
+
+    for number in (1..10).rev() {
+        print!("{}..", number);
+        io::stdout().flush().ok().expect("wtf");
+        thread::sleep(time::Duration::from_millis(500));
+    }
+
+    println!("LIFTOFF!!!1");
 }
