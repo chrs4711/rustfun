@@ -15,6 +15,15 @@ fn main() {
 
     let s = String::from("foo bar");
     first_word_index(&s);
+
+    let s2 = String::from("hello world");
+    let str = first_word_sl(&s2[..]);
+    println!("first word of '{}' is '{}'", &s2, str);
+
+    println!("first word of '{}' is '{}'", "foo bar", first_word_sl("foo bar"));
+
+    // So string slice is compatible to String or what?
+    println!("first word of '{}' is '{}'", "foo bar", first_word_sl(&String::from("foo bar")));
 }
 
 fn calculate_length(s: &String) -> usize {
@@ -28,14 +37,14 @@ fn modify_string(s: &mut String) {
 fn _wont_work() {
     let mut s = String::from("hello");
 
-    let r1 = &s; // super nice read-only references
-    let r2 = &s; // super nice read-only references
+    let _r1 = &s; // super nice read-only references
+    let _r2 = &s; // super nice read-only references
     let r3 = &mut s;
-
+    
     // println!("{} {} {}", r1, r2, r3);
     //                               ^  NOPE!!
     // no borrowing as mutable when immutable references are passed around
-
+    
     // That's cool however:
     println!("{}", r3);
 }
@@ -76,7 +85,7 @@ fn first_word_index(s: &String) -> usize {
     s.len()
 }
 
-fn first_word_sl(s: &String) -> &str {
+fn first_word_sl(s: &str) -> &str {
     let bytes = s.as_bytes();
 
     for (i, &item) in bytes.iter().enumerate() {
